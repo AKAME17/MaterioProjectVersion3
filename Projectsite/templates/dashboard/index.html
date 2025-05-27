@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed">
 <head>
@@ -26,7 +25,6 @@
   <script src="{% static 'js/config.js' %}"></script>
 </head>
 
-
 <body>
   <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
@@ -49,23 +47,96 @@
           </li>
           <li class="menu-item {% if request.path == '/orders/' %}active{% endif %}">
             <a href="{% url 'order_list' %}" class="menu-link">
-            <i class="menu-icon ri-file-list-line"></i>
-            <div>Order List</div>
+              <i class="menu-icon ri-file-list-line"></i>
+              <div>Order List</div>
             </a>
           </li>
-          </ul>
+        </ul>
       </aside>
 
       <!-- Main Content -->
       <div class="layout-page">
-        <nav class="layout-navbar navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme">
-          <div class="container-fluid">
-            <h4 class="fw-bold mb-0">Dashboard Overview</h4>
+
+        <!-- Navbar -->
+        <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme">
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+              <i class="icon-base ri ri-menu-line icon-md"></i>
+            </a>
+          </div>
+
+          <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+
+            <!-- Search -->
+            <div class="navbar-nav align-items-center me-3">
+              <div class="nav-item d-flex align-items-center">
+                <i class="icon-base ri ri-search-line icon-lg lh-0 me-2"></i>
+                <input
+                  type="text"
+                  class="form-control border-0 shadow-none"
+                  placeholder="Search..."
+                  aria-label="Search..." />
+              </div>
+            </div>
+
+            <!-- GitHub Star -->
+            <li class="nav-item lh-1 me-4 list-unstyled">
+              <a class="github-button"
+                 href="https://github.com/themeselection/materio-bootstrap-html-admin-template-free"
+                 data-icon="octicon-star"
+                 data-size="large"
+                 data-show-count="true"
+                 aria-label="Star on GitHub">Star</a>
+            </li>
+
+            <!-- User Dropdown -->
+            <ul class="navbar-nav flex-row align-items-center">
+              <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                <a class="nav-link dropdown-toggle hide-arrow p-0" href="#" data-bs-toggle="dropdown">
+                  <div class="avatar avatar-online">
+                    <img src="{% static 'img/avatars/1.png' %}" alt="User Avatar" class="rounded-circle" />
+                  </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      <div class="d-flex">
+                        <div class="flex-shrink-0 me-3">
+                          <div class="avatar avatar-online">
+                            <img src="{% static 'img/avatars/1.png' %}" alt="User Avatar" class="w-px-40 h-auto rounded-circle" />
+                          </div>
+                        </div>
+                        <div class="flex-grow-1">
+                          <h6 class="mb-0">John Doe</h6>
+                          <small class="text-body-secondary">Admin</small>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li><div class="dropdown-divider my-1"></div></li>
+                  <li><a class="dropdown-item" href="#"><i class="icon-base ri ri-user-line icon-md me-3"></i>My Profile</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="icon-base ri ri-settings-4-line icon-md me-3"></i>Settings</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="icon-base ri ri-bank-card-line icon-md me-3"></i>Billing Plan <span class="badge bg-danger ms-auto">4</span></a></li>
+                  <li><div class="dropdown-divider my-1"></div></li>
+                  <li>
+                    <div class="d-grid px-4 pt-2 pb-1">
+                      <a class="btn btn-danger d-flex align-items-center justify-content-center" href="javascript:void(0);">
+                        <small class="align-middle">Logout</small>
+                        <i class="ri ri-logout-box-r-line ms-2 ri-xs"></i>
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           </div>
         </nav>
 
+        <!-- Content -->
         <div class="content-wrapper">
           <div class="container-xxl flex-grow-1 container-p-y">
+
+            <h4 class="fw-bold py-3 mb-4">Dashboard Overview</h4>
 
             <!-- Cards -->
             <div class="row">
@@ -106,7 +177,7 @@
             <!-- Top Products Table -->
             <div class="card mt-4">
               <div class="card-header">
-                <h5>Top 5 Products</h5>
+                <h5>Top 10 Products</h5>
               </div>
               <div class="table-responsive">
                 <table class="table table-striped">
@@ -135,7 +206,6 @@
             </div>
 
           </div>
-          <!--navigations-->
 
           <!-- Footer -->
           <footer class="content-footer footer bg-footer-theme">
@@ -149,17 +219,14 @@
     </div>
   </div>
 
-  <!-- Core JS -->
-<!-- JS Dependencies -->
-<script src="{% static 'vendor/libs/jquery/jquery.js' %}"></script>
-<script src="{% static 'vendor/libs/popper/popper.js' %}"></script>
-<script src="{% static 'vendor/js/bootstrap.js' %}"></script>
-<script src="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
-<script src="{% static 'vendor/js/menu.js' %}"></script>
-<script src="{% static 'vendor/libs/apex-charts/apexcharts.js' %}"></script>
-<script src="{% static 'js/main.js' %}"></script>
-
-  <!-- Main JS -->
+  <!-- JS Dependencies -->
+  <script src="{% static 'vendor/libs/jquery/jquery.js' %}"></script>
+  <script src="{% static 'vendor/libs/popper/popper.js' %}"></script>
+  <script src="{% static 'vendor/js/bootstrap.js' %}"></script>
+  <script src="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+  <script src="{% static 'vendor/js/menu.js' %}"></script>
+  <script src="{% static 'vendor/libs/apex-charts/apexcharts.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
   <script src="{% static 'assets/js/main.js' %}"></script>
 </body>
 </html>
