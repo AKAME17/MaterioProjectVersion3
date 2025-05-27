@@ -47,7 +47,13 @@
               <div>Dashboard</div>
             </a>
           </li>
-        </ul>
+          <li class="menu-item {% if request.path == '/orders/' %}active{% endif %}">
+            <a href="{% url 'order_list' %}" class="menu-link">
+            <i class="menu-icon ri-file-list-line"></i>
+            <div>Order List</div>
+            </a>
+          </li>
+          </ul>
       </aside>
 
       <!-- Main Content -->
@@ -129,6 +135,7 @@
             </div>
 
           </div>
+          <!--navigations-->
 
           <!-- Footer -->
           <footer class="content-footer footer bg-footer-theme">
