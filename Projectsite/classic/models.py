@@ -1,342 +1,117 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-
-class Actor(models.Model):
-    actor_id = models.SmallAutoField(primary_key=True)
-    first_name = models.CharField(max_length=45)
-    last_name = models.CharField(max_length=45)
-    last_update = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'actor'
-
-
-
-class Address(models.Model):
-    address_id = models.SmallAutoField(primary_key=True)
-    address = models.CharField(max_length=50)
-    address2 = models.CharField(max_length=50, blank=True, null=True)
-    district = models.CharField(max_length=20)
-    city = models.ForeignKey('City', models.DO_NOTHING)
-    postal_code = models.CharField(max_length=10, blank=True, null=True)
-    phone = models.CharField(max_length=20)
-    location = models.TextField()  # This field type is a guess.
-    last_update = models.DateTimeField()
+class ProductLine(models.Model):
+    productLine = models.CharField(primary_key=True, max_length=50)
+    textDescription = models.TextField(blank=True, null=True)
+    htmlDescription = models.TextField(blank=True, null=True)
+    image = models.BinaryField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'address'
+        db_table = 'productlines'
 
 
-class AuthGroup(models.Model):
-    name = models.CharField(unique=True, max_length=150)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_group'
-
-
-class AuthGroupPermissions(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
+class Products(models.Model):
+    productCode = models.CharField(primary_key=True, max_length=15)
+    productName = models.CharField(max_length=70)
+    productLine = models.ForeignKey(ProductLine, on_delete=models.DO_NOTHING, db_column='productLine')
+    productScale = models.CharField(max_length=10)
+    productVendor = models.CharField(max_length=50)
+    productDescription = models.TextField()
+    quantityInStock = models.SmallIntegerField()
+    buyPrice = models.DecimalField(max_digits=10, decimal_places=2)
+    MSRP = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
         managed = False
-        db_table = 'auth_group_permissions'
-        unique_together = (('group', 'permission'),)
+        db_table = 'products'
 
 
-class AuthPermission(models.Model):
-    name = models.CharField(max_length=255)
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
-    codename = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_permission'
-        unique_together = (('content_type', 'codename'),)
-
-
-class AuthUser(models.Model):
-    password = models.CharField(max_length=128)
-    last_login = models.DateTimeField(blank=True, null=True)
-    is_superuser = models.IntegerField()
-    username = models.CharField(unique=True, max_length=150)
-    first_name = models.CharField(max_length=150)
-    last_name = models.CharField(max_length=150)
-    email = models.CharField(max_length=254)
-    is_staff = models.IntegerField()
-    is_active = models.IntegerField()
-    date_joined = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user'
-
-
-class AuthUserGroups(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user_groups'
-        unique_together = (('user', 'group'),)
-
-
-class AuthUserUserPermissions(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-    permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user_user_permissions'
-        unique_together = (('user', 'permission'),)
-
-
-class Category(models.Model):
-    category_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=25)
-    last_update = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'category'
-
-
-class City(models.Model):
-    city_id = models.SmallAutoField(primary_key=True)
+class Offices(models.Model):
+    officeCode = models.CharField(primary_key=True, max_length=10)
     city = models.CharField(max_length=50)
-    country = models.ForeignKey('Country', models.DO_NOTHING)
-    last_update = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'city'
-
-
-class Country(models.Model):
-    country_id = models.SmallAutoField(primary_key=True)
+    phone = models.CharField(max_length=50)
+    addressLine1 = models.CharField(max_length=50)
+    addressLine2 = models.CharField(max_length=50, blank=True, null=True)
+    state = models.CharField(max_length=50, blank=True, null=True)
     country = models.CharField(max_length=50)
-    last_update = models.DateTimeField()
+    postalCode = models.CharField(max_length=15)
+    territory = models.CharField(max_length=10)
 
     class Meta:
         managed = False
-        db_table = 'country'
+        db_table = 'offices'
 
 
-class Customer(models.Model):
-    customer_id = models.SmallAutoField(primary_key=True)
-    store = models.ForeignKey('Store', models.DO_NOTHING)
-    first_name = models.CharField(max_length=45)
-    last_name = models.CharField(max_length=45)
-    email = models.CharField(max_length=50, blank=True, null=True)
-    address = models.ForeignKey(Address, models.DO_NOTHING)
-    active = models.IntegerField()
-    create_date = models.DateTimeField()
-    last_update = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'customer'
-
-
-class DjangoAdminLog(models.Model):
-    action_time = models.DateTimeField()
-    object_id = models.TextField(blank=True, null=True)
-    object_repr = models.CharField(max_length=200)
-    action_flag = models.PositiveSmallIntegerField()
-    change_message = models.TextField()
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+class Employees(models.Model):
+    employeeNumber = models.IntegerField(primary_key=True)
+    lastName = models.CharField(max_length=50)
+    firstName = models.CharField(max_length=50)
+    extension = models.CharField(max_length=10)
+    email = models.CharField(max_length=100)
+    officeCode = models.ForeignKey(Offices, on_delete=models.DO_NOTHING, db_column='officeCode')
+    reportsTo = models.ForeignKey('self', on_delete=models.DO_NOTHING, db_column='reportsTo', blank=True, null=True)
+    jobTitle = models.CharField(max_length=50)
 
     class Meta:
         managed = False
-        db_table = 'django_admin_log'
+        db_table = 'employees'
 
 
-class DjangoContentType(models.Model):
-    app_label = models.CharField(max_length=100)
-    model = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'django_content_type'
-        unique_together = (('app_label', 'model'),)
-
-
-class DjangoMigrations(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    app = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    applied = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_migrations'
-
-
-class DjangoSession(models.Model):
-    session_key = models.CharField(primary_key=True, max_length=40)
-    session_data = models.TextField()
-    expire_date = models.DateTimeField()
+class Customers(models.Model):
+    customerNumber = models.IntegerField(primary_key=True)
+    customerName = models.CharField(max_length=50)
+    contactLastName = models.CharField(max_length=50)
+    contactFirstName = models.CharField(max_length=50)
+    phone = models.CharField(max_length=50)
+    addressLine1 = models.CharField(max_length=50)
+    addressLine2 = models.CharField(max_length=50, blank=True, null=True)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50, blank=True, null=True)
+    postalCode = models.CharField(max_length=15, blank=True, null=True)
+    country = models.CharField(max_length=50)
+    salesRepEmployeeNumber = models.ForeignKey(Employees, on_delete=models.DO_NOTHING, db_column='salesRepEmployeeNumber', blank=True, null=True)
+    creditLimit = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'django_session'
+        db_table = 'customers'
 
 
-class Film(models.Model):
-    film_id = models.SmallAutoField(primary_key=True)
-    title = models.CharField(max_length=128)
-    description = models.TextField(blank=True, null=True)
-    release_year = models.TextField(blank=True, null=True)  # This field type is a guess.
-    language = models.ForeignKey('Language', models.DO_NOTHING)
-    original_language = models.ForeignKey('Language', models.DO_NOTHING, related_name='film_original_language_set', blank=True, null=True)
-    rental_duration = models.PositiveIntegerField()
-    rental_rate = models.DecimalField(max_digits=4, decimal_places=2)
-    length = models.PositiveSmallIntegerField(blank=True, null=True)
-    replacement_cost = models.DecimalField(max_digits=5, decimal_places=2)
-    rating = models.CharField(max_length=5, blank=True, null=True)
-    special_features = models.CharField(max_length=54, blank=True, null=True)
-    last_update = models.DateTimeField()
+class Payments(models.Model):
+    customerNumber = models.ForeignKey(Customers, on_delete=models.DO_NOTHING, db_column='customerNumber')
+    checkNumber = models.CharField(max_length=50)
+    paymentDate = models.DateField()
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
         managed = False
-        db_table = 'film'
+        db_table = 'payments'
+        unique_together = (('customerNumber', 'checkNumber'),)
 
 
-class FilmActor(models.Model):
-    pk = models.CompositePrimaryKey('actor_id', 'film_id')
-    actor = models.ForeignKey(Actor, models.DO_NOTHING)
-    film = models.ForeignKey(Film, models.DO_NOTHING)
-    last_update = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'film_actor'
-
-
-class FilmCategory(models.Model):
-    pk = models.CompositePrimaryKey('film_id', 'category_id')
-    film = models.ForeignKey(Film, models.DO_NOTHING)
-    category = models.ForeignKey(Category, models.DO_NOTHING)
-    last_update = models.DateTimeField()
+class Orders(models.Model):
+    orderNumber = models.IntegerField(primary_key=True)
+    orderDate = models.DateField()
+    requiredDate = models.DateField()
+    shippedDate = models.DateField(blank=True, null=True)
+    status = models.CharField(max_length=15)
+    comments = models.TextField(blank=True, null=True)
+    customerNumber = models.ForeignKey(Customers, on_delete=models.DO_NOTHING, db_column='customerNumber')
 
     class Meta:
         managed = False
-        db_table = 'film_category'
+        db_table = 'orders'
 
 
-class FilmText(models.Model):
-    film_id = models.PositiveSmallIntegerField(primary_key=True)
-    title = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'film_text'
-
-
-class Inventory(models.Model):
-    inventory_id = models.AutoField(primary_key=True)
-    film = models.ForeignKey(Film, models.DO_NOTHING)
-    store = models.ForeignKey('Store', models.DO_NOTHING)
-    last_update = models.DateTimeField()
+class OrderDetails(models.Model):
+    orderNumber = models.ForeignKey(Orders, on_delete=models.DO_NOTHING, db_column='orderNumber')
+    productCode = models.ForeignKey(Products, on_delete=models.DO_NOTHING, db_column='productCode')
+    quantityOrdered = models.IntegerField()
+    priceEach = models.DecimalField(max_digits=10, decimal_places=2)
+    orderLineNumber = models.SmallIntegerField()
 
     class Meta:
         managed = False
-        db_table = 'inventory'
-
-
-class Language(models.Model):
-    language_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=20)
-    last_update = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'language'
-
-
-class Payment(models.Model):
-    payment_id = models.SmallAutoField(primary_key=True)
-    customer = models.ForeignKey(Customer, models.DO_NOTHING)
-    staff = models.ForeignKey('Staff', models.DO_NOTHING)
-    rental = models.ForeignKey('Rental', models.DO_NOTHING, blank=True, null=True)
-    amount = models.DecimalField(max_digits=5, decimal_places=2)
-    payment_date = models.DateTimeField()
-    last_update = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'payment'
-
-
-class Rental(models.Model):
-    rental_id = models.AutoField(primary_key=True)
-    rental_date = models.DateTimeField()
-    inventory = models.ForeignKey(Inventory, models.DO_NOTHING)
-    customer = models.ForeignKey(Customer, models.DO_NOTHING)
-    return_date = models.DateTimeField(blank=True, null=True)
-    staff = models.ForeignKey('Staff', models.DO_NOTHING)
-    last_update = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'rental'
-        unique_together = (('rental_date', 'inventory', 'customer'),)
-
-
-class Staff(models.Model):
-    staff_id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=45)
-    last_name = models.CharField(max_length=45)
-    address = models.ForeignKey(Address, models.DO_NOTHING)
-    picture = models.TextField(blank=True, null=True)
-    email = models.CharField(max_length=50, blank=True, null=True)
-    store = models.ForeignKey('Store', models.DO_NOTHING)
-    active = models.IntegerField()
-    username = models.CharField(max_length=16)
-    password = models.CharField(max_length=40, db_collation='utf8mb4_bin', blank=True, null=True)
-    last_update = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'staff'
-
-
-# class Store(models.Model):
-#     store_id = models.AutoField(primary_key=True)
-#     manager_staff = models.OneToOneField(Staff, models.DO_NOTHING)
-#     address = models.ForeignKey(Address, models.DO_NOTHING)
-#     last_update = models.DateTimeField()
-
-#     class Meta:
-#         managed = False
-#         db_table = 'store'
-
-class Store(models.Model):
-    store_id = models.AutoField(primary_key=True)
-    manager_staff = models.OneToOneField(
-        'Staff', 
-        models.DO_NOTHING,
-        related_name='store_manager'  # Add this line
-    )
-    address = models.ForeignKey(Address, models.DO_NOTHING)
-    last_update = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'store'
+        db_table = 'orderdetails'
+        unique_together = (('orderNumber', 'productCode'),)
