@@ -1,0 +1,26 @@
+{% extends "dashboard/index.html" %}
+
+{% block content %}
+<h1>Order List</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Customer</th>
+      <th>Status</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in orders %}
+    <tr>
+      <td>{{ order.id }}</td>
+      <td>{{ order.customer_name }}</td>
+      <td>{{ order.status }}</td>
+      <td>{{ order.order_date }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

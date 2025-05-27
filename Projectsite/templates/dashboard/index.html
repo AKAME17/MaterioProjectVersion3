@@ -5,228 +5,203 @@
   <meta charset="UTF-8" />
   <title>Dashboard | Classic Models</title>
 
-  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="{% static 'img/favicon/favicon.ico' %}" />
-
-  <!-- Fonts & Icons -->
   <link rel="stylesheet" href="{% static 'vendor/fonts/remixicon/remixicon.css' %}">
-
-  <!-- Core CSS -->
   <link rel="stylesheet" href="{% static 'vendor/css/core.css' %}">
   <link rel="stylesheet" href="{% static 'vendor/css/theme-default.css' %}">
   <link rel="stylesheet" href="{% static 'css/demo.css' %}">
-
-  <!-- Vendor CSS -->
   <link rel="stylesheet" href="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}">
   <link rel="stylesheet" href="{% static 'vendor/libs/apex-charts/apex-charts.css' %}">
 
-  <!-- Helpers -->
   <script src="{% static 'vendor/js/helpers.js' %}"></script>
   <script src="{% static 'js/config.js' %}"></script>
 </head>
 
 <body>
-  <div class="layout-wrapper layout-content-navbar">
-    <div class="layout-container">
+<div class="layout-wrapper layout-content-navbar">
+  <div class="layout-container">
 
-      <!-- Sidebar -->
-      <aside id="layout-menu" class="layout-menu menu-vertical bg-menu-theme">
-        <div class="app-brand">
-          <a href="#" class="app-brand-link">
-            <span class="app-brand-logo"><i class="ri-dashboard-line"></i></span>
-            <span class="app-brand-text demo menu-text fw-bold">ClassicModels</span>
+    <!-- Sidebar -->
+    <aside id="layout-menu" class="layout-menu menu-vertical bg-menu-theme">
+      <div class="app-brand">
+        <a href="#" class="app-brand-link">
+          <span class="app-brand-logo"><i class="ri-dashboard-line"></i></span>
+          <span class="app-brand-text demo menu-text fw-bold">ClassicModels</span>
+        </a>
+      </div>
+      <ul class="menu-inner py-1">
+        <li class="menu-item active">
+          <a href="{% url 'dashboard' %}" class="menu-link">
+            <i class="menu-icon ri-bar-chart-line"></i>
+            <div>Dashboard</div>
+          </a>
+        </li>
+        <li class="menu-item {% if request.path == '/orders/' %}active{% endif %}">
+          <a href="{% url 'order_list' %}" class="menu-link">
+            <i class="menu-icon ri-file-list-line"></i>
+            <div>Order List</div>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="layout-page">
+      <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+          <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+            <i class="icon-base ri ri-menu-line icon-md"></i>
           </a>
         </div>
 
-        <ul class="menu-inner py-1">
-          <li class="menu-item active">
-            <a href="{% url 'dashboard' %}" class="menu-link">
-              <i class="menu-icon ri-bar-chart-line"></i>
-              <div>Dashboard</div>
-            </a>
-          </li>
-          <li class="menu-item {% if request.path == '/orders/' %}active{% endif %}">
-            <a href="{% url 'order_list' %}" class="menu-link">
-              <i class="menu-icon ri-file-list-line"></i>
-              <div>Order List</div>
-            </a>
-          </li>
-        </ul>
-      </aside>
-
-      <!-- Main Content -->
-      <div class="layout-page">
-
-        <!-- Navbar -->
-        <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme">
-          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
-            <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
-              <i class="icon-base ri ri-menu-line icon-md"></i>
-            </a>
-          </div>
-
-          <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
-
-            <!-- Search -->
-            <div class="navbar-nav align-items-center me-3">
-              <div class="nav-item d-flex align-items-center">
-                <i class="icon-base ri ri-search-line icon-lg lh-0 me-2"></i>
-                <input
-                  type="text"
-                  class="form-control border-0 shadow-none"
-                  placeholder="Search..."
-                  aria-label="Search..." />
-              </div>
+        <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+          <div class="navbar-nav align-items-center me-3">
+            <div class="nav-item d-flex align-items-center">
+              <i class="icon-base ri ri-search-line icon-lg lh-0 me-2"></i>
+              <input type="text" class="form-control border-0 shadow-none" placeholder="Search..." />
             </div>
-
-            <!-- GitHub Star -->
-            <li class="nav-item lh-1 me-4 list-unstyled">
-              <a class="github-button"
-                 href="https://github.com/themeselection/materio-bootstrap-html-admin-template-free"
-                 data-icon="octicon-star"
-                 data-size="large"
-                 data-show-count="true"
-                 aria-label="Star on GitHub">Star</a>
+          </div>
+          <ul class="navbar-nav flex-row align-items-center">
+            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+              <a class="nav-link dropdown-toggle hide-arrow p-0" href="#" data-bs-toggle="dropdown">
+                <div class="avatar avatar-online">
+                  <img src="{% static 'img/avatars/1.png' %}" alt="User Avatar" class="rounded-circle" />
+                </div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <a class="dropdown-item" href="#"><i class="icon-base ri ri-user-line icon-md me-3"></i>My Profile</a>
+                </li>
+                <li><a class="dropdown-item" href="#"><i class="icon-base ri ri-settings-4-line icon-md me-3"></i>Settings</a></li>
+                <li><a class="dropdown-item" href="#"><i class="icon-base ri ri-logout-box-r-line icon-md me-3"></i>Logout</a></li>
+              </ul>
             </li>
-
-            <!-- User Dropdown -->
-            <ul class="navbar-nav flex-row align-items-center">
-              <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                <a class="nav-link dropdown-toggle hide-arrow p-0" href="#" data-bs-toggle="dropdown">
-                  <div class="avatar avatar-online">
-                    <img src="{% static 'img/avatars/1.png' %}" alt="User Avatar" class="rounded-circle" />
-                  </div>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      <div class="d-flex">
-                        <div class="flex-shrink-0 me-3">
-                          <div class="avatar avatar-online">
-                            <img src="{% static 'img/avatars/1.png' %}" alt="User Avatar" class="w-px-40 h-auto rounded-circle" />
-                          </div>
-                        </div>
-                        <div class="flex-grow-1">
-                          <h6 class="mb-0">John Doe</h6>
-                          <small class="text-body-secondary">Admin</small>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li><div class="dropdown-divider my-1"></div></li>
-                  <li><a class="dropdown-item" href="#"><i class="icon-base ri ri-user-line icon-md me-3"></i>My Profile</a></li>
-                  <li><a class="dropdown-item" href="#"><i class="icon-base ri ri-settings-4-line icon-md me-3"></i>Settings</a></li>
-                  <li><a class="dropdown-item" href="#"><i class="icon-base ri ri-bank-card-line icon-md me-3"></i>Billing Plan <span class="badge bg-danger ms-auto">4</span></a></li>
-                  <li><div class="dropdown-divider my-1"></div></li>
-                  <li>
-                    <div class="d-grid px-4 pt-2 pb-1">
-                      <a class="btn btn-danger d-flex align-items-center justify-content-center" href="javascript:void(0);">
-                        <small class="align-middle">Logout</small>
-                        <i class="ri ri-logout-box-r-line ms-2 ri-xs"></i>
-                      </a>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </nav>
-
-        <!-- Content -->
-        <div class="content-wrapper">
-          <div class="container-xxl flex-grow-1 container-p-y">
-
-            <h4 class="fw-bold py-3 mb-4">Dashboard Overview</h4>
-
-            <!-- Cards -->
-            <div class="row">
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-body text-center">
-                    <h6>Total Customers</h6>
-                    <h3>{{ total_customers }}</h3>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-body text-center">
-                    <h6>Total Orders</h6>
-                    <h3>{{ total_orders }}</h3>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-body text-center">
-                    <h6>Total Employees</h6>
-                    <h3>{{ total_employees }}</h3>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card">
-                  <div class="card-body text-center">
-                    <h6>Total Products</h6>
-                    <h3>{{ total_products }}</h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Top Products Table -->
-            <div class="card mt-4">
-              <div class="card-header">
-                <h5>Top 10 Products</h5>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Product Code</th>
-                      <th>Name</th>
-                      <th>Line</th>
-                      <th>Stock</th>
-                      <th>Price</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for product in top_products %}
-                    <tr>
-                      <td>{{ product.productCode }}</td>
-                      <td>{{ product.productName }}</td>
-                      <td>{{ product.productLine }}</td>
-                      <td>{{ product.quantityInStock }}</td>
-                      <td>${{ product.buyPrice }}</td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Footer -->
-          <footer class="content-footer footer bg-footer-theme">
-            <div class="container-xxl d-flex justify-content-between py-2">
-              <div>© 2025 ClassicModels</div>
-            </div>
-          </footer>
+          </ul>
         </div>
-      </div>
+      </nav>
 
+      <!-- Content -->
+      <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+          <h4 class="fw-bold py-3 mb-4">Dashboard Overview</h4>
+
+          <!-- Metrics Cards -->
+          <div class="row">
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-body text-center">
+                  <h6>Total Customers</h6>
+                  <h3>{{ company_metrics.total_customers }}</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-body text-center">
+                  <h6>Total Orders</h6>
+                  <h3>{{ company_metrics.total_orders }}</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-body text-center">
+                  <h6>Total Employees</h6>
+                  <h3>{{ company_metrics.total_employees }}</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-body text-center">
+                  <h6>Total Products</h6>
+                  <h3>{{ company_metrics.total_products }}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart -->
+          <div class="card mt-4">
+            <div class="card-header">
+              <h5>Annual Sales </h5>
+            </div>
+            <div class="card-body">
+              <div id="orderChart"></div>
+            </div>
+          </div>
+
+          <!-- Top Products Table -->
+          <div class="card mt-4">
+            <div class="card-header">
+              <h5>Top 10 Products</h5>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Product Code</th>
+                    <th>Name</th>
+                    <th>Line</th>
+                    <th>Stock</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for product in top_products %}
+                  <tr>
+                    <td>{{ product.productCode }}</td>
+                    <td>{{ product.productName }}</td>
+                    <td>{{ product.productLine }}</td>
+                    <td>{{ product.quantityInStock }}</td>
+                    <td>${{ product.buyPrice }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="content-footer footer bg-footer-theme">
+          <div class="container-xxl d-flex justify-content-between py-2">
+            <div>© 2025 ClassicModels</div>
+          </div>
+        </footer>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- JS Dependencies -->
-  <script src="{% static 'vendor/libs/jquery/jquery.js' %}"></script>
-  <script src="{% static 'vendor/libs/popper/popper.js' %}"></script>
-  <script src="{% static 'vendor/js/bootstrap.js' %}"></script>
-  <script src="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
-  <script src="{% static 'vendor/js/menu.js' %}"></script>
-  <script src="{% static 'vendor/libs/apex-charts/apexcharts.js' %}"></script>
-  <script src="{% static 'js/main.js' %}"></script>
-  <script src="{% static 'assets/js/main.js' %}"></script>
+<!-- JS Dependencies -->
+<script src="{% static 'vendor/libs/jquery/jquery.js' %}"></script>
+<script src="{% static 'vendor/libs/popper/popper.js' %}"></script>
+<script src="{% static 'vendor/js/bootstrap.js' %}"></script>
+<script src="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+<script src="{% static 'vendor/js/menu.js' %}"></script>
+<script src="{% static 'vendor/libs/apex-charts/apexcharts.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+<!-- Chart Script -->
+<script>
+  var options = {
+    chart: {
+      type: 'bar',
+      height: 300
+    },
+    series: [{
+      name: 'Orders',
+      data: [30, 40, 25, 50, 49, 60, 70]  // You can dynamically pass in data from Django
+    }],
+    xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']
+    }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#orderChart"), options);
+  chart.render();
+</script>
+
 </body>
 </html>

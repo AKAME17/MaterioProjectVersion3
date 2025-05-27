@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Sum, Count
 from .models import Customers, Employees, Orders, Payments, Products
+from .models import Orders
 
 def dashboard(request):
     context = {
@@ -38,6 +39,6 @@ def dashboard(request):
 
     return render(request, 'dashboard/index.html', context)
 
-def orders_list(request):
-    orders = Orders.objects.select_related('customer').all()
-    return render(request, 'dashboard/orders_list.html', {'orders': orders})
+def OrderListView(request):
+    order = Orders.objects.select_related('customer').all()
+    return render(request, 'dashboard/order_list.html', {'orders': order})
