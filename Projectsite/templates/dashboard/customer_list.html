@@ -1,0 +1,32 @@
+{% extends "dashboard/index.html" %}
+
+{% block content %}
+<h4 class="fw-bold py-3 mb-4">Customer List</h4>
+
+<div class="card">
+  <div class="card-body table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Customer Number</th>
+          <th>Name</th>
+          <th>Contact</th>
+          <th>Phone</th>
+          <th>Country</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customer in customers %}
+        <tr>
+          <td>{{ customer.customerNumber }}</td>
+          <td>{{ customer.customerName }}</td>
+          <td>{{ customer.contactLastName }}, {{ customer.contactFirstName }}</td>
+          <td>{{ customer.phone }}</td>
+          <td>{{ customer.country }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

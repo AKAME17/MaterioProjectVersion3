@@ -1,26 +1,30 @@
 {% extends "dashboard/index.html" %}
 
 {% block content %}
-<h1>Order List</h1>
+<h4 class="fw-bold py-3 mb-4">Order List</h4>
 
-<table border="1">
-  <thead>
-    <tr>
-      <th>Order ID</th>
-      <th>Customer</th>
-      <th>Status</th>
-      <th>Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for order in orders %}
-    <tr>
-      <td>{{ order.id }}</td>
-      <td>{{ order.customer_name }}</td>
-      <td>{{ order.status }}</td>
-      <td>{{ order.order_date }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="card">
+  <div class="card-body table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Order Number</th>
+          <th>Customer</th>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr>
+          <td>{{ order.orderNumber }}</td>
+          <td>{{ order.customerNumber }}</td>
+          <td>{{ order.status }}</td>
+          <td>{{ order.orderDate }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}

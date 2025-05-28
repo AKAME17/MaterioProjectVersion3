@@ -1,0 +1,32 @@
+{% extends "dashboard/index.html" %}
+
+{% block content %}
+<h4 class="fw-bold py-3 mb-4">Product List</h4>
+
+<div class="card">
+  <div class="card-body table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Product Code</th>
+          <th>Name</th>
+          <th>Product Line</th>
+          <th>Quantity In Stock</th>
+          <th>Buy Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        <tr>
+          <td>{{ product.productCode }}</td>
+          <td>{{ product.productName }}</td>
+          <td>{{ product.productLine }}</td>
+          <td>{{ product.quantityInStock }}</td>
+          <td>${{ product.buyPrice }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

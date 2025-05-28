@@ -5,10 +5,7 @@ from .models import Customers, Employees, Orders, Payments, Products
 from django.views.generic import ListView
 import json
 
-class OrderListView(ListView):
-    model = Orders
-    template_name = 'dashboard/order_list.html'
-    context_object_name = 'orders'
+#Charts
 
 def dashboard(request):
     # Pie Chart: Order Status Distribution
@@ -60,3 +57,24 @@ def dashboard(request):
     }
 
     return render(request, 'dashboard/index.html', context)
+#viewing
+
+class OrderListView(ListView):
+    model = Orders
+    template_name = 'dashboard/order_list.html'
+    context_object_name = 'orders'
+
+class ProductListView(ListView):
+    model = Products
+    template_name = 'dashboard/product_list.html'
+    context_object_name = 'products'
+
+class CustomerListView(ListView):
+    model = Customers
+    template_name = 'dashboard/customer_list.html'
+    context_object_name = 'customers'
+
+class EmployeeListView(ListView):
+    model = Employees
+    template_name = 'dashboard/employee_list.html'
+    context_object_name = 'employees'

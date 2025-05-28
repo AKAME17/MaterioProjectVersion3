@@ -43,6 +43,26 @@
             <i class="menu-icon ri-file-list-line"></i>
             <div>Order List</div>
           </a>
+        <li class="menu-item {% if request.path == '/products/' %}active{% endif %}">
+            <a href="{% url 'product_list' %}" class="menu-link">
+                <i class="menu-icon ri-archive-line"></i>
+                <div>Product List</div>
+            </a>
+            </li>
+
+            <li class="menu-item {% if request.path == '/customers/' %}active{% endif %}">
+            <a href="{% url 'customer_list' %}" class="menu-link">
+                <i class="menu-icon ri-user-line"></i>
+                <div>Customer List</div>
+            </a>
+            </li>
+
+            <li class="menu-item {% if request.path == '/employees/' %}active{% endif %}">
+            <a href="{% url 'employee_list' %}" class="menu-link">
+                <i class="menu-icon ri-team-line"></i>
+                <div>Employee List</div>
+            </a>
+            </li>
         </li>
       </ul>
     </aside>
@@ -85,6 +105,7 @@
       <!-- Content -->
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
+        {% block content %}
           <h4 class="fw-bold py-3 mb-4">Dashboard Overview</h4>
 
           <!-- Metrics Cards -->
@@ -158,6 +179,7 @@
             </div>
           </div>
         </div>
+        {% endblock %}
 
         <!-- Footer -->
         <footer class="content-footer footer bg-footer-theme">
