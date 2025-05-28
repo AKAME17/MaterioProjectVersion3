@@ -10,11 +10,14 @@ class ProductLine(models.Model):
         managed = False
         db_table = 'productlines'
 
+    def __str__(self):
+        return self.productLine
+
 
 class Products(models.Model):
     productCode = models.CharField(primary_key=True, max_length=15)
     productName = models.CharField(max_length=70)
-    productLine = models.ForeignKey(ProductLine, on_delete=models.DO_NOTHING, db_column='productLine')
+    productLine = models.ForeignKey(ProductLine, on_delete=models.DO_NOTHING, db_column='productLine', related_name='products')
     productScale = models.CharField(max_length=10)
     productVendor = models.CharField(max_length=50)
     productDescription = models.TextField()
@@ -25,6 +28,9 @@ class Products(models.Model):
     class Meta:
         managed = False
         db_table = 'products'
+
+    def __str__(self):
+        return self.productName
 
 
 class Offices(models.Model):
@@ -42,6 +48,9 @@ class Offices(models.Model):
         managed = False
         db_table = 'offices'
 
+    def __str__(self):
+        return self.city
+
 
 class Employees(models.Model):
     employeeNumber = models.IntegerField(primary_key=True)
@@ -49,13 +58,16 @@ class Employees(models.Model):
     firstName = models.CharField(max_length=50)
     extension = models.CharField(max_length=10)
     email = models.CharField(max_length=100)
-    officeCode = models.ForeignKey(Offices, on_delete=models.DO_NOTHING, db_column='officeCode')
-    reportsTo = models.ForeignKey('self', on_delete=models.DO_NOTHING, db_column='reportsTo', blank=True, null=True)
+    officeCode = models.ForeignKey(Offices, on_delete=models.DO_NOTHING, db_column='officeCode', related_name='employees')
+    reportsTo = models.ForeignKey('self', on_delete=models.DO_NOTHING, db_column='reportsTo', blank=True, null=True, related_name='subordinates')
     jobTitle = models.CharField(max_length=50)
 
     class Meta:
         managed = False
         db_table = 'employees'
+
+    def __str__(self):
+        return f"{self.firstName} {self.lastName}"
 
 
 class Customers(models.Model):
@@ -70,16 +82,19 @@ class Customers(models.Model):
     state = models.CharField(max_length=50, blank=True, null=True)
     postalCode = models.CharField(max_length=15, blank=True, null=True)
     country = models.CharField(max_length=50)
-    salesRepEmployeeNumber = models.ForeignKey(Employees, on_delete=models.DO_NOTHING, db_column='salesRepEmployeeNumber', blank=True, null=True)
+    salesRepEmployeeNumber = models.ForeignKey(Employees, on_delete=models.DO_NOTHING, db_column='salesRepEmployeeNumber', blank=True, null=True, related_name='customers')
     creditLimit = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'customers'
 
+    def __str__(self):
+        return self.customerName
+
 
 class Payments(models.Model):
-    customerNumber = models.ForeignKey(Customers, on_delete=models.DO_NOTHING, db_column='customerNumber')
+    customerNumber = models.ForeignKey(Customers, on_delete=models.DO_NOTHING, db_column='customerNumber', related_name='payments')
     checkNumber = models.CharField(max_length=50)
     paymentDate = models.DateField()
     amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -89,6 +104,9 @@ class Payments(models.Model):
         db_table = 'payments'
         unique_together = (('customerNumber', 'checkNumber'),)
 
+    def __str__(self):
+        return f"{self.customerNumber.customerName} - {self.checkNumber}"
+
 
 class Orders(models.Model):
     orderNumber = models.IntegerField(primary_key=True)
@@ -97,16 +115,19 @@ class Orders(models.Model):
     shippedDate = models.DateField(blank=True, null=True)
     status = models.CharField(max_length=15)
     comments = models.TextField(blank=True, null=True)
-    customerNumber = models.ForeignKey(Customers, on_delete=models.DO_NOTHING, db_column='customerNumber')
+    customerNumber = models.ForeignKey(Customers, on_delete=models.DO_NOTHING, db_column='customerNumber', related_name='orders')
 
     class Meta:
         managed = False
         db_table = 'orders'
 
+    def __str__(self):
+        return f"Order #{self.orderNumber}"
+
 
 class OrderDetails(models.Model):
-    orderNumber = models.ForeignKey(Orders, on_delete=models.DO_NOTHING, db_column='orderNumber')
-    productCode = models.ForeignKey(Products, on_delete=models.DO_NOTHING, db_column='productCode')
+    orderNumber = models.ForeignKey(Orders, on_delete=models.DO_NOTHING, db_column='orderNumber', related_name='orderdetails')
+    productCode = models.ForeignKey(Products, on_delete=models.DO_NOTHING, db_column='productCode', related_name='orderdetails')
     quantityOrdered = models.IntegerField()
     priceEach = models.DecimalField(max_digits=10, decimal_places=2)
     orderLineNumber = models.SmallIntegerField()
@@ -115,3 +136,6 @@ class OrderDetails(models.Model):
         managed = False
         db_table = 'orderdetails'
         unique_together = (('orderNumber', 'productCode'),)
+
+    def __str__(self):
+        return f"{self.orderNumber} - {self.productCode}"
